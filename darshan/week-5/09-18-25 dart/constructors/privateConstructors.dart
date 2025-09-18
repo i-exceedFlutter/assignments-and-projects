@@ -1,23 +1,35 @@
-class DatabaseConnection {
+class banking {
+  String? accnumber;
+  String? accholder;
+  double? balance;
 
-  static final DatabaseConnection databaseConnection = DatabaseConnection._("Oracle DB");
+  banking._(this.accnumber, this.accholder, this.balance);
 
-  DatabaseConnection._(String name) {
-    print("$name connection created.");
+  factory banking.toCheck(String accnumber, String accholder, double balance) {
+    if (balance < 100) {
+      throw new Exception("Balance is insufficient");
+    } else {
+      return banking._(accnumber, accholder, balance);
+    }
   }
 
-  factory DatabaseConnection.callMe() {
-    /*every time the constructor in called the same instance is returned.
-      this is useful when only one object needs to be created.
-    */
-    return databaseConnection;
+  double deposit(double amt) {
+    return balance = balance! + amt;
+  }
+
+  double withDraw(double amt) {
+    if (balance! > amt) {
+      balance = balance! - amt;
+    } else {
+      throw new Exception("Less balance !");
+    }
+
+    return balance!;
   }
 }
 
 void main() {
-  DatabaseConnection databaseConnection = DatabaseConnection.callMe();
-
+  var b1 = banking.toCheck("b1", "Darshan", 125000);
+  print(b1.deposit(25000));
+  print("Balance is ${b1.withDraw(10000)}");
 }
-
-
-
