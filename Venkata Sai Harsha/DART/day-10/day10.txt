@@ -1,0 +1,263 @@
+Function parameters:
+
+Position parameters:
+Plain parameters in ().
+Order matters and all must be supplied.
+
+
+void add(int a, int b) {
+  print('sum = ${a + b}');
+}
+
+void fun(String name, int age){
+	print($name 's age is $age);
+}
+
+void main() {
+  add(2, 3);    
+  // add(2);        // ❌ Missing argument b
+  fun("Sai", 21);
+  //fun(12,"sai");   //this will not work because the order is not correct
+}
+
+
+named parameters:
+Wrap named params in { }.
+Callers pass them by name, order doesn’t matter.
+They’re optional unless marked required.
+You can provide default values.
+
+void createUser({
+  String name = 'Guest',
+  int age = 18,
+  String? city,          // nullable, optional, no default
+}) {
+  print('name=$name, age=$age, city=$city');
+}
+
+void main() {
+  createUser();                                   // name=Guest, age=18
+  createUser(age: 30, name: 'Ava');               // order free
+  createUser(name: 'Ben', city: 'Pune');          // partial named set
+  displayStudent(age:21,name:sai,city:Nandyal);   // we can use names for the parameters while calling the function and we don't use any order 
+}
+
+void displayStudent({String? name, int? age, String? city}){
+	print("Hello! $name ! you are $age years old reside in $city);
+}
+
+Use when: parameters are many, optional, or clarity at call site matters.
+
+
+named parameters with default values:
+Defaults must be compile-time constants.
+
+void greet({String prefix = 'Hello', String name = 'World'}) {
+  print('$prefix, $name');
+}
+
+void main() {
+  greet();                          // Hello, World
+  greet(name: 'Harsha');            // Hello, Harsha
+  greet(prefix: 'Namaste');         // Namaste, World
+}
+
+
+name parameters with required values:
+Add required for parameters that must be provided by name.
+Why required? It keeps named style (readable calls) while enforcing presence.
+
+void connect({
+  required String host,
+  required int port,
+  bool secure = true,
+}) {
+  print('Connecting to $host:$port (tls=$secure)');
+}
+
+void main() {
+  connect(host: 'example.com', port: 443);     
+  // connect(port: 80);                        // ❌ host is required
+}
+
+
+optional positional parameters:
+optional positional parameters let you pass arguments optionally to a function.
+They are enclosed in square brackets [].
+If you don’t provide them, their value becomes null by default (unless you give a default value).
+Useful when some parameters are not always required.
+
+void greet(String name, [String? message]) {
+  print("Hello $name");
+  if (message != null) {
+    print(message);
+  }
+}
+
+void describe(String name, [int age = 18, String city = "Unknown"]) {
+  print("Name: $name, Age: $age, City: $city");
+}
+
+void main() {
+  greet("Harsha");                   // Hello Harsha
+  greet("Harsha", "Welcome to Dart"); // Hello Harsha Welcome to Dart
+  
+  describe("Harsha");                        // Name: Harsha, Age: 18, City: Unknown
+  describe("Harsha", 22);                    // Name: Harsha, Age: 22, City: Unknown
+  describe("Harsha", 22, "Hyderabad");       // Name: Harsha, Age: 22, City: Hyderabad
+}
+
+
+Functional Programming:
+Functional programming is a programming paradigm where programs are built by composing and applying functions.
+Instead of focusing on how to do something (step-by-step instructions), FP focuses on what to do (expressions and transformations).
+Dart supports both Object-Oriented Programming (OOP) and Functional Programming (FP), making it a multi-paradigm language.
+
+Why functional programming
+improved readablity: Functions are self contain and predictable
+Easy for debugging and testing making unit test more simple
+Concurrency friendly Avoid race condition in multithreading
+Less complexity: Less dependency on mutable state and class hierarchies
+
+Dart treat function as a first-class-citizen
+	assign a function to variable
+	pass function as an argument to another Function
+	return functions from another function
+	
+
+assign a function to variable: in this we will assign the function to an variable and call the function with the help of variable
+
+void greet(String name) {
+  print("Hello, $name!");
+}
+
+void main() {
+  // Assign function to a variable
+  var sayHello = greet;
+
+  // Call using variable
+  sayHello("Harsha");  
+}
+
+Assigning anonymous function using lambda:
+void main() {
+  // Assign anonymous function to a variable
+  var multiply = (int a, int b) {
+    return a * b;
+  };
+
+  print(multiply(4, 5)); // 20
+}
+
+Using Arrow Function:
+void main() {
+  // Arrow function assigned to variable
+  var square = (int x) => x * x;
+
+  print(square(6)); // 36
+}
+
+
+pass function as an argument to another Function:
+
+// Function that takes another function as parameter
+void executeTask(Function action) {
+  action(); // call the passed function
+}
+
+void greet() {
+  print("Hello from greet function!");
+}
+
+void main() {
+  executeTask(greet);  // Passing function as argument
+}
+
+
+//function with parameters
+void performOperation(int a, int b, Function operation) {
+  var result = operation(a, b);
+  print("Result: $result");
+}
+
+int add(int x, int y) => x + y;
+int multiply(int x, int y) => x * y;
+
+void main() {
+  performOperation(4, 5, add);       // Result: 9
+  performOperation(4, 5, multiply);  // Result: 20
+}
+
+return functions from another function:
+
+Function greetGenerator() {
+  // This function returns another function
+  return () {
+    print("Hello from the returned function!");
+  };
+}
+
+void main() {
+  var greeter = greetGenerator(); // greeter now holds the inner function
+  greeter(); // Calls the returned function
+}
+
+Function multiplier(int n) {
+  // Returns a function that multiplies input by n
+  return (int x) => x * n;
+}
+
+void main() {
+  var doubleIt = multiplier(2);
+  var tripleIt = multiplier(3);
+
+  print(doubleIt(5)); // 10
+  print(tripleIt(5)); // 15
+}
+
+
+
+
+
+BigINTEGER:
+we can use big integer which is greater than the 2power63-1 and less than 2power63
+
+void main(){
+  BigInt x=BigInt.parse('987654321987654321');
+  print(x);
+//   int y=987654321987654321;
+}
+
+
+Records:
+A record is a fixed-size, immutable collection of values, which can be either:
+ 
+Unnamed (accessed by position), or
+ 
+Named (accessed by name).
+ 
+They are similar to tuples in other languages like Python, Swift, or Kotlin.
+ 
+In Dart, a record is an anonymous, immutable, aggregate type that allows for the bundling of multiple objects into a single, cohesive entity. It provides a lightweight and efficient way to group related data without the overhead of defining a full-fledged class.
+ 
+Anonymous: Records do not have a specific name, unlike classes. They are defined inline, often used for one-time data structures or as a convenient alternative to simple classes.
+Immutable: Once a record is created and its fields are set, their values cannot be changed. This immutability ensures a consistent state and promotes safer, more predictable code.
+Aggregate Type: Records group multiple values, potentially of different types (heterogeneous), into a single unit. This allows for treating the bundled data as a whole, simplifying data manipulation and passing multiple values to or from functions.
+Fixed Size: The number of fields in a record is determined at the time of its creation and cannot be changed later.
+Typed: Each field within a record has a specific type, and Dart's type system ensures type safety.
+
+void main(){
+  var myData=("Sathishsivam","L&D","i-exceed",yoe:25);
+  print(myData.runtimeType);
+  // Accessing the record
+  print('Employee name is ${myData.$1}');
+  print(myData.$3);
+  print(myData.yoe);
+  var args= getQualification();
+  print(args.$3);
+  
+}
+ 
+(String,String,String,{double cgpa}) getQualification(){
+  return ("BE","ME","Ph.D",cgpa:8.6);
+}

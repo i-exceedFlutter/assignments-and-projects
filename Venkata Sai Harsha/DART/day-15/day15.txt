@@ -1,0 +1,333 @@
+Extension methods:
+Extension methods allow you to add new functionality to existing classes (even built-in classes like String, int, List, etc.) without modifying the original class.
+They don’t create a subclass — instead, they act like additional methods available on the class.
+
+class Person {
+  String name;
+  int age;
+  String city;
+
+  // Constructs a [Person] instance with the given [name], [age], and [city].
+  // Uses shorthand syntax for initializing non-nullable fields.
+  Person(this.name, this.age, this.city);
+
+  void display() {
+    print("$name $age $city");
+  }
+}
+
+// An extension on the [Person] class to add greeting capabilities.
+// Extension methods must be defined at the top level, not inside a class.
+extension Greetings on Person {
+  // Generates a personalized greeting string.
+  // [str] is the initial greeting phrase (e.g., "Welcome").
+  // The method appends the person's name to make the greeting more meaningful.
+  String greetMe(String str) {
+    return "$str, $name!";
+  }
+}
+
+// An extension on nullable [String] types to provide string manipulation utilities.
+// The extension name follows the Dart style guide (UpperCamelCase).
+extension MakeMeStringExtension on String? {
+  // Trims whitespace from the string and replaces all occurrences of a substring.
+  // [replaceWhat] is the substring to be replaced.
+  // [replaceBy] is the string to replace [replaceWhat] with.
+  //
+  // This method operates on `this` (the string instance the extension is called on).
+  // If `this` (the string itself) is null, it defaults to an empty string before processing.
+  String trimAndReplace(String replaceWhat, String replaceBy) {
+    // If the string itself is null, treat it as an empty string before processing.
+    String safeString = this ?? '';
+    return safeString.trim().replaceAll(replaceWhat, replaceBy);
+  }
+}
+
+
+void main() {
+  Person p1 = Person("sai", 21, "Nandyal");
+  p1.display();
+  print(p1.greetMe("Welcome"));
+  
+  String str = "Hi! how is you";
+
+  // Call the trimAndReplace extension method directly on the string instance.
+  // The method now uses 'this', so the string itself is not passed as an argument.
+  // It trims the string (though not much to trim here) and replaces "is" with "are".
+  var res = str.trimAndReplace("is", "are");
+  print(res);
+}
+
+
+Merits: Extension methods let you add new functionality to existing classes without modifying them, making code cleaner, modular, and more readable.
+
+Demerits: They can cause conflicts if multiple extensions define the same method, may confuse developers (methods look built-in), and cannot override or add fields to classes.
+
+
+class StringUtils {
+  // Utility method to capitalize
+  static String capitalize(String str) {
+    if (str.isEmpty) return str;
+    return str[0].toUpperCase() + str.substring(1);
+  }
+}
+
+void main() {
+  String name = "dart";
+  print(StringUtils.capitalize(name)); // Dart
+}
+Here you always need to call through the StringUtils class.
+
+extension StringExtension on String {
+  String capitalize() {
+    if (this.isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
+}
+
+void main() {
+  String name = "dart";
+  print(name.capitalize()); // Dart
+}
+Much cleaner → you can call capitalize() directly on the string object.
+
+
+Inheritance:
+In OOP, inheritance allows one class (child / subclass) to reuse the properties and methods of another class (parent / superclass).
+Dart supports single inheritance (a class can only extend one class).
+Keyword: extends.
+
+
+
+
+// Parent Class
+class Animal {
+  String? name;
+
+  // Default constructor
+  Animal() {
+    print("Animal constructor called");
+  }
+
+  void eat() {
+    print("$name is eating...");
+  }
+}
+
+// Child Class
+class Dog extends Animal {
+  String? breed;
+
+  // Child constructor (no super call)
+  Dog(String name, String breed) {
+    this.name = name;   // accessing parent property directly
+    this.breed = breed;
+  }
+
+  void bark() {
+    print("$name the $breed is barking!");
+  }
+}
+
+void main() {
+  Dog dog = Dog("Buddy", "Labrador");
+  dog.eat();   // inherited method
+  dog.bark();  // child method
+}
+
+
+
+
+// Parent Class
+class Animal {
+  String? name;
+
+  // Constructor
+  Animal(this.name);
+
+  void eat() {
+    print("$name is eating...");
+  }
+
+  void sleep() {
+    print("$name is sleeping...");
+  }
+}
+
+// Child Class
+class Dog extends Animal {
+  String breed;
+
+  // Constructor (calling parent constructor using super)
+  Dog(String name, this.breed) : super(name);
+
+  // Overriding parent method
+  @override
+  void eat() {
+    print("$name the $breed is eating dog food...");
+  }
+
+  // Child-specific method
+  void bark() {
+    print("$name is barking!");
+  }
+}
+
+void main() {
+  // Create Dog object
+  Dog dog = Dog("Buddy", "Labrador");
+
+  dog.eat();    // Overridden method from Animal
+  dog.sleep();  // Inherited method
+  dog.bark();   // Child's own method
+}
+
+
+
+using super class constructor and super method in Inheritance
+// Parent class
+class Employee {
+  String name;
+  int id;
+  String designation;
+
+  // Constructor
+  Employee(this.name, this.id, this.designation);
+
+  void display() {
+    print("Name: $name");
+    print("ID: $id");
+    print("Designation: $designation");
+  }
+}
+
+// Child class
+class Manager extends Employee {
+  String department;
+
+  // Using super to call Employee constructor
+  Manager(String name, int id, String designation, this.department)
+      : super(name, id, designation);
+
+  // Override display method
+  @override
+  void display() {
+    super.display(); // Call parent method
+    print("Department: $department");
+  }
+}
+
+void main() {
+  // Create Manager object
+  Manager m1 = Manager("Harsha", 101, "Manager", "IT");
+  m1.display();
+}
+
+COncrete Class:
+A concrete class in Dart is simply a normal class that has a complete implementation (not abstract).
+You can create objects from it directly.
+It contains fully defined methods and variables.
+Unlike an abstract class, a concrete class does not have incomplete (unimplemented) methods.
+
+
+Multilevel inheritance in Dart means a class is derived from another derived class, forming a chain of inheritance.
+For example: Library → Book → Reader, where Book inherits from Library and Reader inherits from Book.
+This allows properties and methods to be passed down through multiple levels, promoting reusability and hierarchical structure.
+
+class Library {
+  String? libraryName;
+
+  Library(String? libraryName){
+    this.libraryName=libraryName;
+  }
+
+  void showLibrary() {
+    print("Library Name: $libraryName");
+  }
+}
+
+class Book extends Library {
+  String? title;
+
+  Book(String? libraryName, String? title) : super(libraryName){
+    this.title=title;
+  }
+
+  void showBook() {
+    super.showLibrary();
+    print("Book Title: $title");
+  }
+}
+
+class Reader extends Book {
+  String? readerName;
+
+  Reader({String? libraryName, String? title, String? readerName})
+      : super(libraryName, title){
+        this.readerName=readerName;
+      }
+
+  void showReader() {
+    super.showBook();
+    print("Reader Name: $readerName");
+  }
+}
+
+void main() {
+  Reader r1 = Reader(
+    libraryName: "City Central Library",
+    title: "Dart Programming",
+    readerName: "Harsha",
+  );
+
+  r1.showReader();
+
+  print("\n--- Example with missing parameters ---");
+  Reader r2 = Reader(); // no parameters passed
+  r2.showReader();
+}
+
+
+Abstract class:
+An abstract class is a class that cannot be instantiated directly.
+It is declared using the abstract keyword.
+It is mainly used to define a blueprint for other classes.
+An abstract class can have:
+Abstract methods (methods without a body → must be implemented by subclasses).
+Concrete methods (normal methods with a body).
+Subclasses that extend the abstract class must provide implementations for all abstract methods.
+
+import 'dart:math';
+
+abstract class Shape {
+  double area();
+}
+
+class Circle extends Shape {
+  double radius;
+  Circle(this.radius);
+
+  @override
+  double area() {
+    return pi * radius * radius;
+  }
+}
+
+class Square extends Shape {
+  double side;
+  Square(this.side);
+
+  @override
+  /*double area() {
+    return side * side;
+  }*/
+  double area() => side * side;
+}
+
+void main() {
+  Circle c = Circle(5);
+  Square s = Square(4);
+
+  print("Area of Circle: ${c.area()}");
+  print("Area of Square: ${s.area()}");
+}

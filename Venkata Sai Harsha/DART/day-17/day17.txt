@@ -1,0 +1,279 @@
+Mixin:
+A mixin in Dart is a way to share code (methods, properties) between multiple classes, without using inheritance.
+Declared with the keyword mixin.
+A class can use multiple mixins (unlike extends, which allows only one parent).
+Mixins cannot be instantiated directly.
+Think of them as “reusable code blocks” you can plug into classes.
+
+The main use of mixins is:
+To reuse code (methods, properties) across multiple classes without inheritance.
+Why is this important?
+In Dart, a class can only extend one parent class (single inheritance).
+But sometimes you want to share the same functionality (like logging, caching, swimming ability, flying ability, etc.) across many unrelated classes.
+Instead of duplicating code, you put it in a mixin and “plug it in” with with.
+
+
+mixin Logger {
+  void log(String msg) => print("LOG: $msg");
+}
+
+mixin Validator {
+  bool isValidEmail(String email) => email.contains("@");
+}
+
+class User with Logger, Validator {
+  String name;
+  String email;
+
+  User(this.name, this.email);
+
+  void register() {
+    if (isValidEmail(email)) {
+      log("User $name registered successfully");
+    } else {
+      log("Invalid email for $name");
+    }
+  }
+}
+
+void main() {
+  User u1 = User("Sai", "sai@example.com");
+  User u2 = User("Harsha", "invalid-email");
+
+  u1.register();
+  u2.register();
+}
+
+
+mixin Swimmer {
+  void swim() => print("Swimming...");
+}
+
+mixin Runner {
+  void run() => print("Running...");
+}
+
+class Athlete with Swimmer, Runner {}
+
+void main() {
+  Athlete a = Athlete();
+  a.swim();
+  a.run();
+}
+
+
+The main use of mixins in Dart is to share reusable functionality across classes without forcing them into an inheritance chain.
+
+class Base {
+  void show() {
+    print("Base class show()");
+  }
+}
+
+mixin MixinA {
+  void show() {
+    print("MixinA show()");
+  }
+}
+
+mixin MixinB {
+  void show() {
+    print("MixinB show()");
+  }
+}
+
+class Child extends Base with MixinA, MixinB {
+  // No override here
+  void showsomething(){
+    show();
+  }
+}
+
+void main() {
+  Child c = Child();
+  c.show();
+}
+
+
+Difference between Mixin and Interface:
+with (Mixin)
+Reuses code.
+The methods/fields in the mixin are directly injected into the class.
+If multiple mixins have the same method, the last one wins.
+implements (Interface)
+No code reuse.
+You are forced to re-implement all methods of the class/interface you implement.
+Good for defining contracts, not code sharing.
+
+
+Use mixin (with) if you want code reuse.
+Use implements if you want a contract and ensure the class provides its own implementation.
+
+
+SOLID principles:
+1. S – Single Responsibility Principle (SRP)
+Definition: A class should have only one reason to change, i.e., it should do only one job.
+Why: If a class has multiple responsibilities, changes in one area may break the others.
+Example:
+❌ A User class that handles user data + file saving + email sending (too many responsibilities).
+✅ Split into separate classes: User, UserRepository, and EmailService.
+
+2. O – Open/Closed Principle (OCP)
+Definition: Software entities (classes, modules, functions) should be open for extension but closed for modification.
+Why: You should be able to add new functionality without changing existing code.
+Example:
+❌ Modifying a Shape class every time you add a new shape type.
+✅ Instead, create an abstract Shape with an area() method and extend it with Circle, Square, etc.
+
+3. L – Liskov Substitution Principle (LSP)
+Definition: Objects of a superclass should be replaceable with objects of its subclass without breaking functionality.
+Why: Subclasses must behave consistently with the parent class’s expectations.
+Example:
+❌ If Bird has fly(), then Penguin extends Bird breaks the rule (since penguins can’t fly).
+✅ Instead, split into Bird and FlyingBird.
+
+4. I – Interface Segregation Principle (ISP)
+Definition: Clients should not be forced to depend on interfaces they don’t use.
+Why: Large interfaces should be split into smaller, more specific ones.
+Example:
+❌ A Printer interface with print(), scan(), fax(), forcing all implementations to define everything.
+✅ Split into Printable, Scannable, and Faxable interfaces.
+
+5. D – Dependency Inversion Principle (DIP)
+Definition: High-level modules should not depend on low-level modules. Both should depend on abstractions.
+Why: Makes code loosely coupled and easy to maintain.
+Example:
+❌ A UserService directly depends on MySQLDatabase.
+✅ Instead, UserService depends on an abstract Database interface, and you can inject MySQLDatabase or MongoDB.
+
+
+Liskov Substitution Principle (LSP):
+// Base class
+abstract class Bird {
+  void eat();
+}
+
+// Subclass that can fly
+abstract class FlyingBird extends Bird {
+  void fly();
+}
+
+class Sparrow extends FlyingBird {
+  @override
+  void eat() => print("Sparrow eats seeds");
+
+  @override
+  void fly() => print("Sparrow flies");
+}
+
+class Penguin extends Bird {
+  @override
+  void eat() => print("Penguin eats fish");
+  // Penguin does NOT fly, so it extends Bird (not FlyingBird)
+}
+
+void main() {
+  Bird sparrow = Sparrow();
+  Bird penguin = Penguin();
+
+  sparrow.eat(); // ✅ Works fine
+  penguin.eat(); // ✅ Works fine
+
+  (sparrow as FlyingBird).fly(); // ✅ Sparrow can fly
+  // (penguin as FlyingBird).fly(); ❌ Would cause error if we forced it
+}
+
+
+Interface Segregation Principle (ISP):
+// Instead of one large interface, split into small ones
+abstract class Printer {
+  void printDoc();
+}
+
+abstract class Scanner {
+  void scanDoc();
+}
+
+abstract class Fax {
+  void faxDoc();
+}
+
+// Old printer only supports printing
+class SimplePrinter implements Printer {
+  @override
+  void printDoc() => print("Printing document...");
+}
+
+// Modern printer supports multiple features
+class MultiFunctionPrinter implements Printer, Scanner, Fax {
+  @override
+  void printDoc() => print("Printing document...");
+
+  @override
+  void scanDoc() => print("Scanning document...");
+
+  @override
+  void faxDoc() => print("Faxing document...");
+}
+
+void main() {
+  Printer p1 = SimplePrinter();
+  p1.printDoc();
+
+  MultiFunctionPrinter p2 = MultiFunctionPrinter();
+  p2.printDoc();
+  p2.scanDoc();
+  p2.faxDoc();
+}
+
+
+Asynchronous Programming:
+Normal (synchronous) code runs line by line → each line waits for the previous one to finish.
+Asynchronous code allows tasks (like API calls, file reads, timers) to run without blocking the main program.
+This is very important in Dart (especially Flutter apps) because the UI must stay responsive while waiting for background tasks.
+
+print("Start");
+Future.delayed(Duration(seconds: 2), () {
+  print("Task done!");
+});
+print("End");
+
+output:
+Start
+End
+Task done!
+
+Future:
+A Future in Dart represents a value that will be available in the future (maybe after some time).
+A Future can either:
+Complete with a value (success).
+Complete with an error (failure).
+
+Future<String> fetchData() {
+  return Future.delayed(Duration(seconds: 2), () => "Data fetched");
+}
+
+void main() {
+  fetchData().then((value) => print(value));
+}
+
+async and await:
+The async keyword marks a function as asynchronous (it always returns a Future).
+The await keyword pauses execution until the Future completes (inside an async function).
+
+Future<String> fetchData() async {
+  await Future.delayed(Duration(seconds: 2));
+  return "Data fetched successfully";
+}
+
+void main() async {
+  print("Start");
+  String result = await fetchData();
+  print(result);
+  print("End");
+}
+
+output:
+Start
+Data fetched successfully
+End

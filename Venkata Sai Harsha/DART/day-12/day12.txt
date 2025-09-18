@@ -1,0 +1,153 @@
+Constructor:
+Default Constructor:
+class Student {
+  int? age, id;
+  String? name;
+  
+  Student() {} //default constructor
+  
+  Student.getDeatils(String name, int age, int id) {
+    this.name = name;
+    this.age = age;
+    this.id = id;
+  }
+
+  void display() {
+    print("Name: ${this.name}");
+    print("Age: ${this.age}");
+    print("ID: ${this.id}");
+  }
+  
+  Student.getName(String name){
+    this.name=name;
+    print("from name only method ${this.name}");
+  }
+}
+
+
+void main() {
+  // Instantiate Student using named parameters
+  Student s1 = Student.getDeatils("sai", 21, 1);
+  Student s2 = Student.getDeatils("harsha", 32, 2);
+  s1.display();
+  s2.display();
+  Student.getName("sai harsha");
+}
+
+Parametrized Constructor:
+A constructor is a special method in a class used to initialize objects.
+A parameterized constructor is a constructor that takes arguments so you can initialize object properties with specific values at the time of creation.
+In short: it allows you to pass values to an object when you create it.
+
+Basic parameterized constructor:
+class Student {
+  String name;
+  int age;
+
+  // Parameterized constructor
+  Student(String n, int a) {
+    name = n;
+    age = a;
+  }
+
+  void display() {
+    print("Name: $name, Age: $age");
+  }
+}
+
+void main() {
+  Student s1 = Student("Harsha", 21);
+  Student s2 = Student("Sai", 22);
+
+  s1.display(); // Name: Harsha, Age: 21
+  s2.display(); // Name: Sai, Age: 22
+}
+
+
+short hand syntax in dart:
+class Student {
+  String name;
+  int age;
+
+  // Parameterized constructor (short-hand)
+  Student(this.name, this.age);
+
+  void display() {
+    print("Name: $name, Age: $age");
+  }
+}
+
+void main() {
+  Student s1 = Student("Kiran", 20);
+  s1.display(); // Name: Kiran, Age: 20
+}
+
+
+Parameterized Constructor with Named parameters:
+class Student {
+  int? age, id;
+  String? name;
+
+  // Constructor with named parameters
+  //Student({this.name, this.age, this.id}); //we can use both type of constructors 
+  //while using named parameters then we need to enclose with the flower brackets then only we can say it has named parameters or else it is not named parameters
+  Student({String? name, int? age, int? id}) {
+    this.name = name;
+    this.age = age;
+    this.id = id;
+  }
+
+  void display() {
+    print("Name: ${this.name}");
+    print("Age: ${this.age}");
+    print("ID: ${this.id}");
+  }
+}
+
+void main() {
+  Student s1 = Student(name: "sai", age: 21);
+  Student s2 = Student(id: 2, name: "harsha", age: 32);
+  s1.display();
+  s2.display();
+}
+
+
+
+Using of a private Constructor:
+class Student {
+  // Use a final field for the message, indicating it's set once at construction.
+  final String msg;
+
+  // Private named constructor:
+  // It takes the message and initializes the 'msg' field using a constructor initializer.
+  // The print statement now correctly accesses the initialized 'this.msg'.
+  Student._(this.msg) {
+    print("Private constructor called: from factory ${this.msg}");
+  }
+
+  // Factory constructor:
+  // This is the public way to create Student instances.
+  // It calls the private named constructor to perform the actual object creation.
+  factory Student.tocall(String msg) {
+    // Optionally, you could also add a print here if the "from factory" message
+    // was truly intended to signify the factory constructor's call.
+    // print("Factory constructor 'tocall' invoked with message: '$msg'");
+    return Student._(msg);
+  }
+}
+
+void main() {
+  print("Creating student instances using the factory constructor:");
+
+  // Create a student using the factory constructor
+  final student1 = Student.tocall("Hello Dart!");
+  print("Student 1 created: $student1\n");
+
+  // Create another student
+  final student2 = Student.tocall("Welcome to the program!");
+  print("Student 2 created: $student2\n");
+
+  // Demonstrate accessing the message
+  print("Message from student1: ${student1.msg}");
+  print("Message from student2: ${student2.msg}");
+}

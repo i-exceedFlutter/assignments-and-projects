@@ -1,0 +1,130 @@
+
+
+
+SET:
+A Set is a collection of unique values (no duplicates allowed).
+By default, it is unordered (does not guarantee insertion order).
+Useful when you want to store items without repetition.
+
+main()
+{
+  Set<String> lang1={"java","js","dart","go"};
+  print(lang1);
+ 
+  List l1=List.from(lang1);
+  print(l1.runtimeType);
+ 
+  Set<String> lang2={};
+  lang2.addAll(lang1);
+  print(lang2);
+  
+  // lang1.remove("go");
+ 
+  // lang1.removeAll(["go","js"]);
+  // print(lang1);
+ 
+    //  lang1.retainWhere((i)=>i.startsWith("j"));
+ 
+     print(lang1);
+ 
+     if(lang1.containsAll(["go","dart"]))
+     {
+      print("its great to have go with this set");
+     }
+     else{
+      print("Not in set");
+     }
+ 
+ 
+   // print({20,45,50}.any((x)=>x>=40));
+ 
+   
+   print(lang1.lookup("go"));
+   
+   lang1.forEach((x)=>print(x.toUpperCase()));
+ 
+   print(lang1);
+ 
+  var mapedlang= lang1.map((i)=>i.toUpperCase());
+  print(mapedlang);
+ 
+  print(lang1.where((i)=>i.startsWith("j")));
+ 
+  Set<List<String>> data={["A","b"],["C","d"],["e","f"]};
+  print(data.expand((element)=>element));
+}
+ 
+
+
+
+
+void main() {
+  // Creating a Set using literal
+  var numbers = <int>{1, 2, 3, 4};
+  print("Initial Set: $numbers");
+
+  // add() - Adds an element
+  numbers.add(5);
+  print("After add(5): $numbers");
+
+  // addAll() - Adds multiple elements
+  numbers.addAll([6, 7, 8]);
+  print("After addAll([6, 7, 8]): $numbers");
+
+  // remove() - Removes an element if present
+  numbers.remove(3);
+  print("After remove(3): $numbers");
+
+  // removeAll() - Removes multiple elements
+  numbers.removeAll([6, 7]);
+  print("After removeAll([6, 7]): $numbers");
+
+  // clear() - Removes all elements from the set
+  var tempSet = {10, 20, 30};
+  tempSet.clear();
+  print("After clear(): $tempSet"); // {}
+
+  // contains() - Checks if a value exists
+  print("Contains 4? ${numbers.contains(4)}"); // true
+
+  // containsAll() - Checks multiple values
+  print("ContainsAll([2,4])? ${numbers.containsAll([2, 4])}"); // true
+
+  // union() - Combines two sets (no duplicates)
+  var setA = {1, 2, 3};
+  var setB = {3, 4, 5};
+  print("Union of $setA and $setB: ${setA.union(setB)}");
+
+  // intersection() - Common elements
+  print("Intersection of $setA and $setB: ${setA.intersection(setB)}");
+
+  // difference() - Elements present in first but not in second
+  print("Difference of $setA and $setB: ${setA.difference(setB)}");
+
+  // elementAt() - Access element by index
+  print("Element at index 2 in numbers: ${numbers.elementAt(2)}");
+
+  // length - Number of elements
+  print("Length of numbers: ${numbers.length}");
+
+  // isEmpty / isNotEmpty
+  print("Is numbers empty? ${numbers.isEmpty}");
+  print("Is numbers not empty? ${numbers.isNotEmpty}");
+
+  // forEach() - Loop through elements
+  print("Loop using forEach:");
+  numbers.forEach((n) => print(n));
+
+  // toList() - Convert Set to List
+  var numList = numbers.toList();
+  print("Converted to List: $numList");
+
+  // retainAll() - Keeps only elements also present in another collection
+  var retainSet = {2, 4, 10};
+  numbers.retainAll(retainSet);
+  print("After retainAll({2,4,10}): $numbers");
+
+  // lookup() - Finds element (returns same element if present, else null)
+  print("Lookup 2: ${numbers.lookup(2)}");
+  print("Lookup 100: ${numbers.lookup(100)}"); // null
+}

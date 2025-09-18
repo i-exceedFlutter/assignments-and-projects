@@ -1,0 +1,98 @@
+Interfaces VS Abstract:
+Abstract:
+An abstract class is a blueprint that can have both abstract methods (without body) and concrete methods (with body). It cannot be instantiated directly. Abstract classes are useful when you want to share some common implementation along with enforcing rules for subclasses.
+
+Interface:
+Dart does not have a special interface keyword; instead, every class can act as an interface. A class that implements another class must provide implementations for all its methods. Interfaces are mainly used to define contracts, and a class can implement multiple interfaces, enabling multiple inheritance of behavior.
+
+Difference
+
+Abstract classes can have both defined and undefined methods, while interfaces are generally only contracts.
+A class can extend only one abstract class but can implement multiple interfaces.
+Abstract classes allow code reuse, interfaces only enforce structure/behavior.
+
+Interfaces in Dart are just contracts for behavior. They allow you to write flexible, modular, and testable code because classes are forced to follow specific rules.
+
+import 'dart:math';
+
+abstract class Shape {
+  double area();
+  double perimeter();
+}
+
+class Circle extends Shape {
+  double radius;
+  Circle(this.radius);
+
+  @override
+  double area() => pi * radius * radius;
+
+  @override
+  double perimeter() => 2 * pi * radius;
+}
+
+class Payment {
+  void pay(double amount);
+}
+
+class CreditCardPayment implements Payment {
+  @override
+  void pay(double amount) {
+    print("Paid ₹$amount using Credit Card");
+  }
+}
+
+class UpiPayment implements Payment {
+  @override
+  void pay(double amount) {
+    print("Paid ₹$amount using UPI");
+  }
+}
+
+void main() {
+  Shape c = Circle(5);
+  print("Circle Area: ${c.area()}");
+  print("Circle Perimeter: ${c.perimeter()}");
+
+  Payment p1 = CreditCardPayment();
+  Payment p2 = UpiPayment();
+  p1.pay(500);
+  p2.pay(300);
+}
+
+
+
+// Base class
+abstract class Vehicle {
+  String brand;
+
+  Vehicle(this.brand);
+
+  void start();
+}
+
+// Interface
+class Maintainable {
+  void service();
+}
+
+// Car extends Vehicle and implements Maintainable
+class Car extends Vehicle implements Maintainable {
+  Car(String brand) : super(brand);
+
+  @override
+  void start() {
+    print("$brand car is starting...");
+  }
+
+  @override
+  void service() {
+    print("$brand car is under maintenance...");
+  }
+}
+
+void main() {
+  Car c = Car("Tesla");
+  c.start();
+  c.service();
+}

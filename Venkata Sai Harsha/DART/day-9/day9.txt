@@ -1,0 +1,240 @@
+Const: A variable that is a compile-time constant.
+Must be assigned with a value that is known at compile time when we are assigning a values and we don't want to change the value again and it is const once we assign it.
+
+void main(){
+	const pi=3.14;
+	print(pi);
+	//pi=2.13 we can't change tyhe value once we assign it.
+}
+
+Use const when the value is always fixed and known at compile-time.
+
+
+final: A variable that can be set only once, but its value is determined at runtime.
+You cannot reassign it later. once we assign the value and it will we known at the runtime after every time we run the program then it need to decide it.
+
+void main() {
+  final currentTime = DateTime.now(); 
+  print(currentTime);
+
+  // currentTime = DateTime.now(); // ❌ Error: can't reassign final variable
+}
+
+
+operands and operators:
+operands are a and b in the expression and operators are +
+
+Arthematic Operators:
++ (Addition) → a + b
+- (Subtraction) → a - b
+* (Multiplication) → a * b
+/ (Division → gives double) → a / b
+~/ (Integer Division → discards decimal) → a ~/ b
+% (Modulus → remainder) → a % b
+++ (Increment) → a++ or ++a
+-- (Decrement) → a-- or --a
+
+
+void main() {
+  int a = 10, b = 3;
+  print(a + b);  // 13
+  print(a - b);  // 7
+  print(a * b);  // 30
+  print(a / b);  // 3.333...
+  print(a ~/ b); // 3
+  print(a % b);  // 1
+  print(a++);
+  print(b--);
+}
+
+
+Relational Operators:
+== (Equal to)
+!= (Not equal to)
+> (Greater than)
+< (Less than)
+>= (Greater than or equal to)
+<= (Less than or equal to)
+
+
+void main() {
+  int x = 10, y = 20;
+  print(x == y);  // false
+  print(x != y);  // true
+  print(x > y);   // false
+  print(x < y);   // true
+  print(x >= 10); // true
+  print(y <= 10); // false
+}
+
+Logical Operators:
+These are used to combine or invert boolean values.
+&& (Logical AND) → true if both are true
+|| (Logical OR) → true if at least one is true
+! (Logical NOT) → inverts value
+
+mainly logial operators are used in conditional statements
+
+void main() {
+  bool a = true, b = false;
+
+  print(a && b); // false
+  print(a || b); // true
+  print(!a);     // false
+  print(!b);     // true
+}
+
+
+Assignment Operators:
+Assignment operators are used to assign values to variables and also update them.
+= → Assign value
++= → Add and assign
+-= → Subtract and assign
+*= → Multiply and assign
+/= → Divide and assign (double result)
+~/= → Integer divide and assign
+%= → Modulus and assign
+
+
+void main() {
+  int a = 10;
+  a += 5;   // a = a + 5 → 15
+  a -= 3;   // a = a - 3 → 12
+  a *= 2;   // a = a * 2 → 24
+  a ~/= 4;  // a = a ~/ 4 → 6
+  a %= 4;   // a = a % 4 → 2
+  print(a); // 2
+}
+
+
+Prefix Operators (++a / --a):
+In prefix, the value is changed first and then used.
+
+
+void main() {
+  int x = 5;
+
+  print(++x); // 6 → increment first, then print
+  print(--x); // 5 → decrement first, then print
+}
+
+
+Postfix Operators (a++ / a--):
+In postfix, the value is used first and then changed.
+void main() {
+  int y = 5;
+
+  print(y++); // 5 → print first, then increment (y becomes 6)
+  print(y);   // 6
+  print(y--); // 6 → print first, then decrement (y becomes 5)
+  print(y);   // 5
+}
+
+
+void main() {
+  String str1 = "Manipulation of 'String'";
+  print('Dart has $str1');
+  print('string length is ${str1.length}');
+  //{} is used when we using expression then we will use it
+  //String s="my name is "sai harsha""; this type of string is not possible and for single invited commas is also same
+  String s = 'my name is "sai harsha"';
+  print(s);
+}
+
+
+void main() {
+  String str = '''this is the string which might be enclosed with triples''';
+  print(str);
+  String name = "    sathishsivam";
+  print('welcome ${name.trim()}');
+  String name1 = r"sathish\nsivam"; //this raw string
+  //if we to print the statement as it is them we will use r infornt of the string then it will print as it is we call it as raw string
+  print('welcome Mr${name1}');
+  String s = "venkata\tsai\nharsha";
+  print(s);
+  print(r'welcome Mr${name1}'); //it will print as it is
+}
+
+
+void main() {
+  var data = ("Sathishsivam", "L&D", "iexceed", 25, true);
+  print(data.runtimeType);
+  print(data.$1);
+  print(data.$2);
+  print(data.$3);
+  print(data.$4);
+  print(data.$5);
+}
+
+
+void main() {
+  var data = (
+    name: "Sathishsivam",
+    dept: "L&D",
+    company: "iexceed",
+    yoe: 25,
+    isWorking: true,
+  );
+  print(data.runtimeType);
+  print(data.name);
+  print(data.dept);
+  print(data.company);
+  print(data.yoe);
+  print(data.isWorking);
+}
+
+
+void main() {
+  var data = (
+    name: "Sathishsivam",
+    dept: "L&D",
+    company: "iexceed",
+    yoe: 25,
+    isWorking: true,
+    "salem"
+  );
+  print(data.runtimeType);
+  print(data.name);
+  print(data.dept);
+  print(data.company);
+  print(data.yoe);
+  print(data.isWorking);
+  print(data.$1);
+}
+
+
+void main() {
+  var myData = ("Sathishsivam", "L&D", "i-exceed", yoe: 25);
+  print(myData.runtimeType);
+  // Accessing the record
+  print('Employee name is ${myData.$1}');
+  print(myData.$3);
+  print(myData.yoe);
+  // The original error indicated a mismatch where the pattern was effectively expecting 4 positional fields.
+  // To fix this, we are changing getQualification to return a record with 4 positional fields,
+  // and the destructuring pattern to match those 4 positional fields.
+  var (String ug, String pg, String phd, double cgpa) = getQualification();
+  print(ug);
+  print(cgpa); // Print the destructured cgpa value
+}
+
+// Modified to return a record with 4 positional fields instead of 3 positional and 1 named.
+(String, String, String, double) getQualification() {
+  return ("BE", "ME", "Ph.D", 8.6);
+}
+
+
+void main() {
+  var (name, years) = displayData();
+  print('Hi $name you are $years old');
+  print(displayData());
+}
+
+(String, int) displayData() {
+  return ("sai", 21);
+}
+
+
+
+
+

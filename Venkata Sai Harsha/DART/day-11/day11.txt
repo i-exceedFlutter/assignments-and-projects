@@ -1,0 +1,322 @@
+Functional programming:
+Closure:
+A closure is a function that:
+	Accesses variables from its own scope (inside function).
+	Remembers variables from its enclosing scope (outer function).
+	Keeps those variables alive even after the outer function has finished execution.
+In short: A closure = function + environment (captured variables).
+
+Function makeGreeter(String name) {
+  return () {
+    print("Hello, $name");
+  };
+}
+
+void main() {
+  var greetHarsha = makeGreeter("Harsha");
+  var greetSai = makeGreeter("Sai");
+
+  greetHarsha(); // Hello, Harsha
+  greetSai();    // Hello, Sai
+  var res=add(10,20);
+  print(res);
+  var res1=add1(30,40);
+  print(res1);
+}
+
+int add(int x,int y){
+	return x+y;
+}
+
+var add1=(int x,int y){
+	return x+y;
+}
+
+
+Lambda Expression:
+In Functional Programming, a lambda expression is an anonymous function (a function without a name).
+Instead of declaring full functions, we use short inline functions (lambdas) to transform, filter, or combine data.
+This keeps code concise, expressive, and declarative.
+
+Functions as First-Class Citizens → Functions can be passed around.
+Higher-Order Functions → Functions take other functions as arguments or return them.
+Immutability and Transformation → Collections are transformed using map, where, reduce.
+
+Lambdas are a natural fit here because they provide small, quick functions without needing boilerplate.
+
+void main() {
+  var square = (int x) => x * x;
+  print(square(6)); // 36
+}
+
+void main() {
+  var numbers = [1, 2, 3, 4, 5, 6];
+  var evens = numbers.where((n) => n.isEven);
+  print(evens.toList()); // [2, 4, 6]
+}
+
+void main() {
+  var numbers = [1, 2, 3, 4];
+  var sum = numbers.reduce((a, b) => a + b);
+  print(sum); // 10
+}
+
+Higher-Order Function in Functinal programming:
+A Higher-Order Function is a function that does at least one of the following:
+
+Takes another function as a parameter
+Returns a function as its result
+Or does both
+
+This is a core concept in Functional Programming because it treats functions as first-class citizens.
+
+//functiona as a parameter
+void performOperation(int a, int b, int Function(int, int) operation) {
+  print("Result: ${operation(a, b)}");
+}
+
+void main() {
+  performOperation(5, 3, (x, y) => x + y); // Result: 8
+  performOperation(5, 3, (x, y) => x * y); // Result: 15
+}
+
+
+//returning another function
+Function multiplier(int n) {
+  return (int x) => x * n;
+}
+
+void main() {
+  var doubleIt = multiplier(2);
+  var tripleIt = multiplier(3);
+
+  print(doubleIt(4)); // 8
+  print(tripleIt(4)); // 12
+}
+
+
+//Built-in higher order functions
+void main() {
+  var numbers = [1, 2, 3, 4, 5];
+
+  var squares = numbers.map((n) => n * n);   // map is HOF
+  var evens = numbers.where((n) => n.isEven); // where is HOF
+  var sum = numbers.reduce((a, b) => a + b); // reduce is HOF
+
+  print(squares.toList()); // [1, 4, 9, 16, 25]
+  print(evens.toList());   // [2, 4]
+  print(sum);              // 15
+}
+
+
+Class and Objects in DART
+
+//same as like in java
+class: Blueprint of an object
+object: instance of an class
+
+// Defining a class
+class Car {
+  // Properties
+  String brand;
+  int year;
+
+  // Constructor
+  Car(this.brand, this.year);
+
+  // Method
+  void displayInfo() {
+    print("Car Brand: $brand, Manufactured Year: $year");
+  }
+}
+
+void main() {
+  // Creating an object of the class
+  Car myCar = Car("Tesla", 2023);
+
+  // Accessing properties and method
+  myCar.displayInfo();
+}
+
+
+This keyword:
+Differentiate between class properties and local variables
+When constructor or method parameters have the same name as class properties, this helps avoid ambiguity.
+Pass the current object to another method or constructor.
+Chain constructors within the same class.
+
+
+class Student {
+  String? name;
+  int? age;
+
+  // Constructor with parameters same as property names
+  Student(String name, int age) {
+    this.name = name; // 'this' refers to the class property
+    this.age = age;
+  }
+
+  void display() {
+    print("Name: $name, Age: ${this.age}");
+  }
+}
+
+void main() {
+  Student s1 = Student("Harsha", 21);
+  s1.display();
+  print(s1.name); //Harsha
+}
+
+
+Accessing current class methods with this
+
+class Calculator {
+  int a;
+  int b;
+
+  Calculator(this.a, this.b);
+
+  // Method 1
+  int add() {
+    return a + b;
+  }
+
+  // Method 2 calls another method using 'this'
+  void showSum() {
+    int result = this.add(); // calling current class method
+    print("The sum is: $result");
+  }
+}
+
+void main() {
+  Calculator calc = Calculator(10, 20);
+  calc.showSum();
+}
+
+
+Passing current object using this
+
+class Department {
+  void show(Student s) {
+    print("Student Department linked with: ${s.name}");
+  }
+}
+
+class Student {
+  String name;
+  Student(this.name);
+
+  void linkDepartment(Department d) {
+    d.show(this); // passing current object
+  }
+}
+
+void main() {
+  Student s1 = Student("Sai");
+  Department d1 = Department();
+  s1.linkDepartment(d1);
+}
+
+
+Method Chaining:
+class Calculator {
+  int value = 0;
+
+  Calculator add(int x) {
+    value += x;
+    return this;
+  }
+
+  Calculator multiply(int x) {
+    value *= x;
+    return this;
+  }
+
+  void showResult() {
+    print("Result: $value");
+  }
+}
+
+void main() {
+  Calculator calc = Calculator();
+  calc.add(5).multiply(3).showResult(); // (0+5)*3 = 15 //method chaining
+}
+
+
+Constructor:
+Constructors are special functions that create instances of classes.
+class EmployeeData {
+  String? name, desig;
+  int? empId, salary; // Renamed emp_id to empId
+
+  EmployeeData(String name, int empId, String desig, int salary) { // Renamed emp_id to empId
+    this.name = name;
+    this.empId = empId; // Renamed emp_id to empId
+    this.desig = desig;
+    this.salary = salary;
+  }
+  void displayEmployee() {
+    print("Name of the employee: ${this.name}");
+    print("id of the employee: ${this.empId}"); // Renamed emp_id to empId
+    print("employee designation: ${this.desig}");
+    print("Salary: ${this.salary}"); // Corrected to print salary instead of name
+    print(this);
+  }
+}
+
+void main() {
+  EmployeeData e = EmployeeData("sai", 4784, "Software", 20000);
+  e.displayEmployee();
+}
+
+
+
+void main() {
+  List<String> l1 = ["java", "js", "python", "dart"];
+  l1.add("c");
+  print(l1);
+
+  List<String> l2 = ["c", "c++", "pascal", "cobol"];
+  l1.addAll(l2);
+
+  print(l1);
+
+  l1.insertAll(0, l2);
+  l1.remove("c");
+  print(l1);
+  l1.removeAt(0);
+  print(l1);
+  l1.removeLast();
+  print(l1);
+  l1.removeRange(0, 2);
+  print(l1);
+  print(l1.contains("apple"));
+  print(l1.indexOf("python"));
+  print(l1.lastIndexOf("c"));
+  l1.sort();
+  print(l1);
+
+  // for(var i=0;i<l1.length;i++)
+  // {
+  //   print(changeCase(l1[i]));
+  // }
+
+  var ilanguage = l1.map((i) => i.startsWith('j'));  //higher order function using lambda and map
+  print(ilanguage);
+  var lan=l1.where((i) => i.startsWith('j'));
+  print(lan);
+  //  var jo=l1.join(',');
+  //  print(jo);
+  l1.shuffle();
+  print(l1);
+
+  List<int>? l5 = [];
+  List<int> l6 = [...l5, 4];
+  print(l6);
+  
+  List<int>? l7=null;
+  List<int> l8=[...?l7,45];
+  print(l8);
+}
+
+// changeCase(String s) =>  s.toUpperCase();

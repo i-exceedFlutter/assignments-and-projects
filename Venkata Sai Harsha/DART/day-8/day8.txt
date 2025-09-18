@@ -1,0 +1,114 @@
+int: Integer values no larger than 64 bits, depending on the platform. On native platforms, values can be from -263 to 263 - 1. On the web, integer values are represented as JavaScript numbers (64-bit floating-point values with no fractional part) and can be from -253 to 253 - 1.
+
+
+void main() {
+  int x = 9223372036854775807;
+  print(x);
+  print(x.runtimeType);
+}
+
+
+void main() {
+  num x = 0.3;
+  num y = 0.1;
+  num sum = x + y;
+  print(sum);
+}
+
+output: 0.3999999999
+
+num: num is a super type for both int and double
+
+void main(){
+  num value = 10.78;
+  // value = "hi"; // Error: can't assign String to num
+  print(value);
+  print(value.runtimeType);
+  num v=10;
+  print(v);
+  print(v.runtimeType);
+  num z = 12.23;
+  print(z);
+  print(z.runtimeType);
+}
+
+var: assigns the variable type at compile time and cannot change type later.
+
+void main() {
+  var a = 10;
+  print(a);
+  //a="hi"; // Error: type mismatch
+  print(a);
+  print(a.runtimeType);
+  var b = "hi";
+  print(b);
+  //   b=10; // Error: type mismatch
+}
+
+
+dynamic: can hold any type and change type at runtime without error.
+
+void main(){
+  dynamic y = 90;
+  print(y);
+  print(y.runtimeType);
+  y = "welcome";
+  print(y.runtimeType);
+  print(y);
+}
+
+
+Object: object is the superclass of all types; you can assign any value, but accessing members requires casting.
+
+void main(){
+  Object h = 10;
+  print(h.runtimeType);
+  print(h);
+  int h1 = h as int;
+  print(h1 + 6);
+  h = "object data";
+  print(h.runtimeType);
+  print(h);
+  h = [1, 2, 3];
+  print(h);
+}
+
+
+bool: stores either true or false
+
+void main(){
+  bool x = true;
+  print(x);
+  print(x.runtimeType);
+  x = false;
+  print(x);
+}
+
+
+decimal: stores decimal numbers; even when you assign an int, it's treated as int
+
+void main() {
+  double x = 10.45;
+  print(x);
+  print(x.runtimeType);
+  x = 10;
+  print(x);
+  print(x.runtimeType);
+}
+
+output: 
+10.45
+double
+10
+int
+
+
+String: String is a sequence of UTF-16 code units, representing text. Dart strings are immutable, meaning once created, their content cannot be changed. Any operation that appears to modify a string actually returns a new string with the desired changes. 
+
+void main() {
+  String s = "harsha";
+  print(s);
+  print(s.runtimeType);
+  s = s + "!";
+  print(s);
+}

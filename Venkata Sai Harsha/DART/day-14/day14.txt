@@ -1,0 +1,102 @@
+Getters and Setters:
+Getter → Used to get (read) the value of a private property.
+Setter → Used to set (update) the value of a private property.
+In Dart, we often make fields private (using _) and control access with getters and setters.
+
+we can write get methods in two ways in dart one is generall way and another is using lambda function which is higher order function 
+
+
+class Student {
+  String? _name;  // private variable
+  int? _age;
+
+  // Setter for name
+  set name(String name) {
+    this._name = name;
+  }
+
+  // Getter for name
+  /*String? get name {
+    return _name;
+  }*/
+  
+  String? getname(){
+	return name;
+  }
+
+  // Setter for age
+  set age(int age) {
+    if (age > 0) {
+      this._age = age;
+    } else {
+      print("Age must be positive");
+    }
+  }
+
+  // Getter for age
+  int? get age => _age; // short-hand getter
+}
+
+void main() {
+  var s = Student();
+
+  s.name = "Sai";   // calls setter
+  s.age = 21;       // calls setter
+
+  print("Name: ${s.name}"); // calls getter
+  print("Age: ${s.age}");   // calls getter
+}
+
+
+
+In Dart, any identifier (variable, method, class, function) that starts with _ is private.
+BUT: “private” in Dart means it is restricted to the same library, not just to the same class.
+
+Key idea:
+A library in Dart = a Dart file (or multiple files imported together using part of / part).
+So, if two classes are in the same library (file), they can access each other’s private members (those starting with _).
+Here in dart library means the same file and different files and different libraries 
+
+Same file (same library):
+// file: student.dart
+class Student {
+  String _name;   // private
+  int _age;
+
+  Student(this._name, this._age);
+}
+
+class Teacher {
+  void showStudentInfo(Student s) {
+    // ✅ Can access private variables (same file = same library)
+    print("Student name: ${s._name}");
+    print("Student age: ${s._age}");
+  }
+}
+
+void main() {
+  var s = Student("Sai", 21);
+  var t = Teacher();
+  t.showStudentInfo(s);
+}
+
+
+Different files (different libraries):
+
+// student.dart
+class Student {
+  String _name;
+  int _age;
+  Student(this._name, this._age);
+}
+
+// teacher.dart
+import 'student.dart';
+
+class Teacher {
+  void showStudentInfo(Student s) {
+    // ❌ ERROR: Can't access private variables
+    // print(s._name);
+    // print(s._age);
+  }
+}
