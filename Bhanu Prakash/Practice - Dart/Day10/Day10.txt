@@ -1,0 +1,38 @@
+// Record Example with Named + Positional fields
+void main() {
+  var myData = ("Sathishsivam", "L&D", "i-exceed", yoe: 25);
+  print(myData.runtimeType);     // Shows record type
+
+  // Accessing the record
+  print('Employee name is ${myData.$1}');  // Positional field
+  print(myData.$3);                        // Another positional field
+  print(myData.yoe);                       // Named field
+
+  // Destructuring record returned from function
+  var (ug, pg, dr, :cgpa) = getQualification();
+  print("UG: $ug, PG: $pg, Dr: $dr, CGPA: $cgpa");
+}
+
+(String, String, String, {double cgpa}) getQualification() {
+  return ("BE", "ME", "Ph.D", cgpa: 8.6);
+}
+
+// Functions as First-Class Citizens
+void sayHello(String name) {
+  print("Hello $name");
+}
+
+void main() {
+  var greeter = sayHello;   // store function in a variable
+  greeter("Bhanu");         // call function via variable
+}
+
+// Higher-Order Function Example
+int operate(int x, int y, int Function(int, int) op) {
+  return op(x, y);   // apply operation
+}
+
+void main() {
+  print(operate(5, 3, (x, y) => (x + y))); // pass lambda (addition)
+  print(operate(2, 3, (x, y) => (x * y))); // pass lambda (multiplication)
+}

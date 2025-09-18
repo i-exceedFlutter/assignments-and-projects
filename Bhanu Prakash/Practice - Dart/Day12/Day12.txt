@@ -1,0 +1,116 @@
+// 1. Default Constructor
+class StudentDefault {
+  int? age, id;
+  String? name;
+
+  // Default constructor
+  StudentDefault() {
+    print("Default constructor called");
+  }
+
+  // Named constructor for details
+  StudentDefault.getDeatils(String name, int age, int id) {
+    this.name = name;
+    this.age = age;
+    this.id = id;
+  }
+
+  // Named constructor for name only
+  StudentDefault.getName(String name) {
+    this.name = name;
+    print("From name only method: ${this.name}");
+  }
+
+  void display() {
+    print("Name: ${this.name}");
+    print("Age: ${this.age}");
+    print("ID: ${this.id}");
+  }
+}
+
+// 2. Parameterized Constructor
+class StudentParameterized {
+  String name;
+  int age;
+
+  StudentParameterized(String n, int a) {
+    name = n;
+    age = a;
+  }
+
+  void display() {
+    print("Name: $name, Age: $age");
+  }
+}
+
+// 3. Shorthand Constructor (using this)
+class StudentShorthand {
+  String name;
+  int age;
+
+  StudentShorthand(this.name, this.age);
+
+  void display() {
+    print("Name: $name, Age: $age");
+  }
+}
+
+// 4. Parameterized Constructor with Named Parameters
+class StudentNamed {
+  int? age, id;
+  String? name;
+
+  StudentNamed({this.name, this.age, this.id});
+
+  void display() {
+    print("Name: ${this.name}");
+    print("Age: ${this.age}");
+    print("ID: ${this.id}");
+  }
+}
+
+// 5. Private Constructor with Factory
+class StudentPrivate {
+  final String msg;
+
+  // Private named constructor
+  StudentPrivate._(this.msg) {
+    print("Private constructor called: $msg");
+  }
+
+  // Factory constructor
+  factory StudentPrivate.tocall(String msg) {
+    return StudentPrivate._(msg);
+  }
+}
+
+void main() {
+  print("=== Default Constructor Example ===");
+  StudentDefault s1 = StudentDefault.getDeatils("Sai", 21, 1);
+  StudentDefault s2 = StudentDefault.getDeatils("Harsha", 32, 2);
+  s1.display();
+  s2.display();
+  StudentDefault.getName("Sai Harsha");
+
+  print("\n=== Parameterized Constructor Example ===");
+  StudentParameterized sp1 = StudentParameterized("Harsha", 21);
+  StudentParameterized sp2 = StudentParameterized("Sai", 22);
+  sp1.display();
+  sp2.display();
+
+  print("\n=== Shorthand Constructor Example ===");
+  StudentShorthand ss1 = StudentShorthand("Kiran", 20);
+  ss1.display();
+
+  print("\n=== Named Parameters Constructor Example ===");
+  StudentNamed sn1 = StudentNamed(name: "Sai", age: 21);
+  StudentNamed sn2 = StudentNamed(id: 2, name: "Harsha", age: 32);
+  sn1.display();
+  sn2.display();
+
+  print("\n=== Private Constructor with Factory Example ===");
+  final student1 = StudentPrivate.tocall("Hello Dart!");
+  final student2 = StudentPrivate.tocall("Welcome to the program!");
+  print("Message from student1: ${student1.msg}");
+  print("Message from student2: ${student2.msg}");
+}

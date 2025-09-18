@@ -1,0 +1,47 @@
+// Named Record Example
+void main() {
+  var data = (
+    name: "Sathishsivam",
+    dept: "L&D",
+    company: "iexceed",
+    yoe: 25,
+    isWorking: true,
+  );
+  print(data.runtimeType);  // Shows the record type
+  print(data.name);         // Access by field name
+  print(data.dept);
+  print(data.company);
+  print(data.yoe);
+  print(data.isWorking);
+}
+
+// Mixed Record (Positional + Named fields)
+void main() {
+  var data = ("Sathishsivam", dept: "L&D", company: "iexceed", yoe: 25, isWorking: true);
+  print(data.runtimeType);  // Shows record type
+  print(" ");
+  print(data.$1);           // Access first positional value
+  print(data.dept);         // Access named field
+  print(data.company);
+}
+
+// Record Destructuring
+void main() {
+  var (name, years) = displayData();   // Destructuring into variables
+  print('Hi $name, you are $years years old');
+}
+
+(String, int) displayData() {
+  return ("Bhanu", 21);  // Returning a record
+}
+
+// Optional Parameters + String trim()
+void greet(String name, [int? age]) {
+  print('Hi, I am $name and I am $age years old.');
+}
+
+void main() {
+  String str = "Bhanu Prakash          TTTTT hh       ";
+  print('Welcome ${str.trim()}');   // trim() removes extra spaces
+  greet('Bhanu');                   // Call greet without age
+}

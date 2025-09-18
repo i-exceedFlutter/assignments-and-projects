@@ -1,0 +1,70 @@
+void main() {
+  // Creating a Set using literal
+  Set<int> numbers = {1, 2, 3, 4};
+  print("Initial Set: $numbers");
+
+  // add() - Adds an element
+  numbers.add(5);
+  print("After add(5): $numbers");
+
+  // addAll() - Adds multiple elements
+  numbers.addAll([6, 7, 8]);
+  print("After addAll([6, 7, 8]): $numbers");
+
+  // remove() - Removes an element if present
+  numbers.remove(3);
+  print("After remove(3): $numbers");
+
+  // removeAll() - Removes multiple elements
+  numbers.removeAll([6, 7]);
+  print("After removeAll([6, 7]): $numbers");
+
+  // clear() - Removes all elements from a Set
+  var tempSet = {10, 20, 30};
+  tempSet.clear();
+  print("After clear(): $tempSet");
+
+  // contains() - Checks if a value exists in the set
+  print("Contains 4? ${numbers.contains(4)}");
+
+  // containsAll() - Checks multiple values at once
+  print("ContainsAll([2,4])? ${numbers.containsAll([2, 4])}");
+
+  // union() - Combines two sets (removes duplicates)
+  var setA = {1, 2, 3};
+  var setB = {3, 4, 5};
+  print("Union of $setA and $setB: ${setA.union(setB)}");
+
+  // intersection() - Finds common elements
+  print("Intersection of $setA and $setB: ${setA.intersection(setB)}");
+
+  // difference() - Elements present in first but not in second
+  print("Difference of $setA and $setB: ${setA.difference(setB)}");
+
+  // elementAt() - Access element by index
+  print("Element at index 2 in numbers: ${numbers.elementAt(2)}");
+
+  // length - Number of elements
+  print("Length of numbers: ${numbers.length}");
+
+  // isEmpty / isNotEmpty
+  print("Is numbers empty? ${numbers.isEmpty}");
+  print("Is numbers not empty? ${numbers.isNotEmpty}");
+
+  // forEach() - Loop through elements
+  print("Loop using forEach:");
+  numbers.forEach((n) => print(n));
+
+  // toList() - Convert Set to List
+  List<int> numList = numbers.toList();
+  print("Converted to List: $numList");
+
+  // retainAll() - Keeps only elements also present in another collection
+  var retainSet = {2, 4, 10};
+  numbers.retainAll(retainSet);
+  print("After retainAll({2,4,10}): $numbers");
+
+  // lookup() - Finds element (returns the element if present, else null)
+  print("Lookup 2: ${numbers.lookup(2)}");
+  print("Lookup 100: ${numbers.lookup(100)}"); // null
+}

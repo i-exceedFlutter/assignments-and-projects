@@ -1,0 +1,78 @@
+//int
+void main() {
+  int age = 25;
+  print(age);
+  print(age.runtimeType);
+}
+
+//double
+void main() {
+  double price = 99.99;
+  print(price);
+  print(price.runtimeType);
+}
+
+//String
+void main() {
+  String name = "Bhanu";
+  print(name);
+  print(name.runtimeType);
+}
+
+//bool
+void main() {
+  bool isActive = true;
+  print(isActive);
+  print(isActive.runtimeType);
+}
+
+//List
+void main() {
+  List<String> fruits = ['Apple', 'Banana', 'Mango'];
+  print(fruits);
+  print(fruits.runtimeType);
+}
+
+//Map
+void main() {
+  Map<String, int> marks = {
+    'Math': 95,
+    'English': 88,
+  };
+  print(marks);
+  print(marks.runtimeType);
+}
+
+//Set
+void main() {
+  Set<int> numbers = {1, 2, 3, 2};
+  print(numbers);
+  print(numbers.runtimeType);
+}
+
+//var
+void main() {
+  var city = "Delhi";
+  print(city);
+  print(city.runtimeType);
+}
+
+//dynamic
+void main() {
+  dynamic x = 10;
+  print(x);
+  print(x.runtimeType);
+  
+  x = "Bhanu";
+  print(x);
+  print(x.runtimeType);
+}
+
+//Object
+void main() {
+  Object anything = 42;
+  print(anything.runtimeType);
+  
+  anything = "Now I'm a string";
+  print(anything.runtimeType);
+}
