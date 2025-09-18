@@ -1,0 +1,17 @@
+class MyThread extends Thread {
+    MyThread()
+    {
+      this.start();
+    }
+    public void run() {
+        System.out.println("Thread is running...");
+    }
+}
+class Thread2 {
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread(); 
+        MyThread t2= new MyThread();
+        //t1.start();    
+        //t2.start();               
+    }
+}
