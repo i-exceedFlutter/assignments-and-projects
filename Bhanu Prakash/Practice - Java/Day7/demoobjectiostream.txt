@@ -1,0 +1,28 @@
+import java.io.Serializable;
+import java.io.*;
+ 
+class employee implements Serializable
+  {
+    String empname,desig;
+    int empcode;
+    double salary;
+    employee(int empcode,String empname,String desig,double salary)
+	{
+	   this.empcode=empcode;
+	   this.empname=empname;
+	   this.desig=desig;
+	   this.salary=salary;
+	}
+  }
+ 
+class demoobjectiostream
+{ 
+    public static void main(String args[]) throws Expection{
+        employee e1= new employee(374,"Bhanu","Trainee",10000);
+        FileOutputStream f=new FileOutputStream("employee.txt");
+        ObjectOutputStream Os= new ObjectOutputStream(f);
+        Os.writeObject(e1);
+        
+    }
+    
+}
