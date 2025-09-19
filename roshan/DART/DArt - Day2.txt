@@ -1,0 +1,170 @@
+
+
+-> funcitonal programming
+
+//improves readability: functions are self contain and predictable
+//easy for debugging and testing: making unit test more simple
+//concurrency friendly: avoid race condition in multi threading 
+//less complexity: less dependency on mutable state and class hierarchy
+
+Dart treats function as a first-class-citizen
+	assign a function to a variable
+	pass funtion as an argument to another function
+	return functions from another functions
+
+
+-> Strings in Dart Programming 
+ 
+main() {
+  String str1 = "Manipulation of 'String'";
+  print('Dart has ${str1.toUpperCase()}');
+}
+ 
+ 
+user {} this along with your string for an expression alone
+ 
+-> 
+
+main() {
+  String str = '''this is the string which might be enclosed with triples''';
+  print(str);
+  String name = "    roshankhan";
+  print('welcome ${name.trim()}');  //will trim the name 
+  String name1 = r"sathish\nsivam";   //r represents raw string which doesnt count "/n /t like commands"
+  print(r'welcome Mr${name1}');     // now this is a raw string 
+}
+
+->final Keyword
+
+Used to declare a single-assignment variable.
+Value is set at runtime and cannot be changed later.
+Not necessarily known at compile time.
+
+Key Points:
+
+You can assign once, but not modify.
+Can be initialized with runtime values.
+
+Example:
+final currentTime = DateTime.now();  // Runtime value
+
+void main() {
+  print("Time: $currentTime");
+
+  // currentTime = DateTime.now();  Error: Can't reassign final variable
+}
+
+->const Keyword
+
+Used to define a compile-time constant.
+The value must be known at compile time.
+
+Key Points:
+
+More strict than final.
+Evaluated at compile time.
+Always used for immutable values.
+
+Example:
+const pi = 3.14159;
+
+void main() {
+  print("Value of Pi: $pi");
+
+  // pi = 3.14;  Error: Can't reassign const variable
+}
+
+-> operators in dart
+
+void main() {
+  int a = 10;
+  int b = 5;
+
+  // Arithmetic
+  print("a + b = ${a + b}");  // 15
+  print("a - b = ${a - b}");  // 5
+  print("a * b = ${a * b}");  // 50
+  print("a / b = ${a / b}");  // 2.0
+  print("a % b = ${a % b}");  // 0
+
+  // Relational
+  print("a == b? ${a == b}");  // false
+  print("a != b? ${a != b}");  // true
+  print("a > b? ${a > b}");    // true
+  print("a <= b? ${a <= b}");  // false
+
+  // Logical
+  bool condition1 = a > b;
+  bool condition2 = b > 0;
+
+  print("condition1 && condition2: ${condition1 && condition2}");  // true
+  print("condition1 || (b == 0): ${condition1 || (b == 0)}");      // true
+  print("!condition1: ${!condition1}");                            // false
+}
+
+
+-> Records in dart
+Records (tuples) were introduced in Dart 3 as a way to group multiple values of different types together without creating a class.
+
+main() {
+  var data = ("Sathishsivam", "L&D","iexceed", 25, true);
+  print(data.runtimeType);
+  print(data.$1);
+  print(data.$2);
+  print(data.$3);
+  print(data.$4);
+  print(data.$5);
+}
+
+o/p:
+
+(String, String, String, int, bool)
+Sathishsivam
+L&D
+iexceed
+25
+true
+
+
+-> dart records with named fields 
+
+main() {
+  var data = (
+    name: "Sathishsivam",
+    dept: "L&D",
+    company: "iexceed",
+    yoe: 25,
+    isWorking: true,
+  );
+  print(data.runtimeType);
+  print(data.name);
+  print(data.dept);
+  print(data.company);
+  print(data.yoe);
+  print(data.isWorking);
+}
+
+o/p:
+
+({String company, String dept, bool isWorking, String name, int yoe})
+Sathishsivam
+L&D
+iexceed
+25
+true
+
+note:-Dart prints named fields in alphabetical order of their field names when showing the runtime type of a record, not the order they were declared.
+
+->records with function
+ 
+return multiple values 
+ 
+main() {
+  var (name, years) = displayData();
+  print('Hi $name you are $years old');
+}
+ 
+(String, int) displayData() {
+  return ("Roshan", 21);
+}
+ 

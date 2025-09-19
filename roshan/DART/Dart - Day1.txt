@@ -1,0 +1,109 @@
+1. var in Dart
+
+When you use var, Dart infers the type at compile time based on the first assigned value.
+
+Once assigned, the type is fixed and cannot be changed later.
+
+ Example:
+void main() {
+  var x = 9;
+  print(x);                // Output: 9
+  print(x.runtimeType);    // Output: int
+
+  x = 111;                 // OK: still int
+  print(x);                // Output: 111
+  print(x.runtimeType);    // Output: int
+}
+
+ Reassigning with a different type:
+void main() {
+  var x = 9;
+  print(x);
+  print(x.runtimeType);
+
+  x = 111.89868;           //  Error: double assigned to var of type int
+  print(x);
+  print(x.runtimeType);
+}
+
+
+Note: var is statically typed — Dart remembers the type from the first assignment.
+
+2. dynamic in Dart
+
+The dynamic keyword tells Dart: "don't check the type at compile time — figure it out at runtime."
+
+A dynamic variable can hold values of different types across its lifetime.
+
+ Example:
+void main() {
+  dynamic x = 9;
+  print(x);                // Output: 9
+  print(x.runtimeType);    // Output: int
+
+  x = 111.89868;           // OK: now a double
+  print(x);                // Output: 111.89868
+  print(x.runtimeType);    // Output: double
+}
+
+
+Note: Use dynamic only when needed — it disables type checking, so it's more flexible but also less safe.
+
+3. Boolean (bool) in Dart
+
+Dart uses the bool type for boolean logic.
+
+Values are either true or false.
+
+ Example:
+void main() {
+  bool isAlive = true;
+
+  if (isAlive) {
+    print("YES");   // Output: YES
+  } else {
+    print("No");
+  }
+}
+
+4. Floating-point numbers in Dart
+
+Dart does not use float — it uses double for all decimal numbers.
+
+num is a supertype of both int and double.
+
+ Example using num:
+void main() {
+  num y = 0.1;
+  num x = 0.2;
+
+  print(x + y);    // Output: 0.30000000000000004
+}
+
+
+Note: This is a floating-point precision issue (common in many languages). It's not specific to num — it would also happen with double.
+
+5. int
+
+Used for whole numbers.
+
+Cannot hold decimal values.
+
+int x = 10;
+x = 3.14;       //  Error
+
+6. double
+
+Used for decimal numbers (floating-point).
+
+double x = 3.14;
+x = 10;         // OK (10 is converted to 10.0)
+
+7. String
+
+Used for text values.
+
+Supports interpolation and many methods.
+
+String name = 'Alice';
+print('Hello $name');     // Hello Alice

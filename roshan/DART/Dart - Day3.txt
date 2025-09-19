@@ -1,0 +1,113 @@
+-> functional programming
+
+	Functional Programming (FP) is a programming paradigm where:
+		Functions are treated as first-class citizens
+		Pure functions (no side effects) are preferred
+		Immutability is emphasized
+		Functions can be passed as arguments, returned, or assigned to variables
+		
+		
+
+void main(){
+	var res = add(10,20);
+	print(res);
+	var res1 = add1(30,40);
+	print(res1);
+	var res2 = add2(50,20);
+	print(res2);
+	print(useme(conv,"bengaluru"));  //higher order function
+}
+
+//normal named function
+
+int add(int x,int y){
+	return x+y;
+}
+
+//closure function assigned to variable add1
+
+var add1=(int x,int y){
+	return x+y;
+};
+
+//lambda expression	
+
+var add2=(int x,int y)=> x+y;
+
+var conv=(x){
+	return(x.tuUpperCase());
+};
+
+String useme(Function fun,String str)   //useme is the higher order function
+{
+	return fun(str);
+}
+
+-----------------------------------------------------------------------------------------------------------
+
+
+main()
+{
+  var myData=("roshankhan","L&D","i-exceed",yoe:25);
+  print(myData.runtimeType);
+  // Accessing the record
+  print('Employee name is ${myData.$1}');
+  print(myData.$3);
+  print(myData.yoe);
+  var args= getQualification();
+  print(args.$3);
+  
+}
+ 
+(String,String,String,{double cgpa}) getQualification()
+{
+  return ("BE","ME","Ph.D",cgpa:8.6);
+}
+
+ 
+//A record is a fixed-size, immutable collection of values, which can be either:
+ 
+//Unnamed (accessed by position), or
+ 
+//Named (accessed by name).
+ 
+// They are similar to tuples in other languages like Python, Swift, or Kotlin.
+ 
+//In Dart, a record is an anonymous, immutable, aggregate type that allows for
+//the bundling of multiple objects into a single, cohesive entity. It provides a lightweight and efficient way to group related data without the overhead of defining a full-fledged class.
+ 
+//Anonymous:
+// Records do not have a specific name, unlike classes. They are defined inline, often used for one-time data structures or as a convenient alternative to simple classes.
+ 
+//Immutable:
+//Once a record is created and its fields are set, their values cannot be changed. This immutability ensures a consistent state and promotes safer, more predictable code.
+ 
+//Aggregate Type:
+//Records group multiple values, potentially of different types (heterogeneous), into a single unit. This allows for treating the bundled data as a whole, simplifying data manipulation and passing multiple values to or from functions.
+ 
+//Fixed Size:
+//The number of fields in a record is determined at the time of its creation and cannot be changed later.
+ 
+//Typed:
+//Each field within a record has a specific type, and Dart's type system ensures type safety.
+
+
+-> BigInt is used to store very large integers beyond the limit of int.
+
+Unlike int, BigInt can handle arbitrary precision integers.
+
+Key Points:
+
+Cannot be created using numeric literals directly.
+
+Use BigInt.parse(String) to create a BigInt.
+
+Example:
+void main() {
+  BigInt big1 = BigInt.parse('123456789012345678901234567890');
+  BigInt big2 = BigInt.parse('987654321098765432109876543210');
+
+  BigInt result = big1 + big2;
+
+  print(result);
+}
