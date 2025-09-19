@@ -1,0 +1,171 @@
+Optional positional parameters:
+Declared using square brackets [], and passed by position:
+
+void greet([String? name]) {}
+
+greet();             // OK
+greet("Alice");      // OK
+
+
+Named parameters:
+Declared using curly braces {} and passed by name:
+
+void greet({String? name}) {}
+
+greet();                  // OK
+greet(name: "Alice");     // OK
+
+Why Dart enforces the order: [positional], {named}
+Because function calls stay clear and unambiguous:
+
+If you were allowed to write:
+
+void greet({String? name}, [int? age])  // ❌ invalid
+
+How would you call it?
+
+greet(name: "Bob", 25);  // ❓ is 25 the second named argument? or positional?
+
+This would be ambiguous and confusing both to humans and the compiler.
+
+
+
+?. → Null-aware access operator
+Used to safely access a property or method of an object that might be null.
+If the object is null, the whole expression evaluates to null instead of throwing an exception.
+
+?? → Null-coalescing operator
+Used to provide a default value if the left-hand side is null.
+It’s like saying: “If this value is null, use something else.”
+
+! → Null assertion operator
+Used to forcefully treat a value as non-null.
+If the value is actually null, it throws a runtime error.
+Useful when you are sure (100%) that the value won’t be null at that point.
+
+
+
+class Person {
+  String? name;      
+  int? age;      
+
+  Person({this.name, this.age});
+
+  void displayInfo() {
+    print("Name length: ${name?.length}");
+    print("Age: ${age ?? 18}"); 
+  }
+
+  void shoutName() {
+    print("HEY, ${name!.toUpperCase()}!");
+  }
+
+  // shoutName 1 is the best way of use for null assertion if we use directly then the valus is null means the code will get an exception at that point it won't go futher 
+  // Using shoutName1 is a safer way to handle null values with the null assertion operator. If we directly use `name!` when `name` is null, the program will throw a runtime exception and stop execution immediately. By checking `name != null` first, we avoid the crash and handle the null case gracefully.
+  void shoutName1(){
+    if(name!=null){
+      print("HEY, ${name!.toUpperCase()}!");
+    }else{
+      print("name is null");
+    }
+  }
+
+}
+
+void main() {
+  var p1 = Person(name: "Alice", age: 25);
+  p1.displayInfo();   
+  p1.shoutName();    
+  p1.shoutName1(); 
+
+  print("-----");
+
+  var p2 = Person();
+  p2.displayInfo();  
+  
+  p2.shoutName1();  
+  // p2.shoutName();   // ERROR at runtime (Null check operator used on a null value)
+}
+
+This Keyword:
+class Student {
+  String name;
+  int rollNo;
+
+  Student(this.name, this.rollNo);
+}
+
+Here, this.name and this.rollNo are initialized directly in the constructor parameter list.
+That means before the object is created, Dart already knows:
+name will get a non-null value
+rollNo will get a non-null value
+
+class Student {
+  String name; 
+  int rollNo; 
+
+  Student(String name, int rollNo) {
+    this.name = name;
+    this.rollNo = rollNo;
+  }
+}
+
+Here, name and rollNo are still non-nullable fields, but notice:
+When Dart reaches the line Student(String name, int rollNo) { ... }, the object is already being constructed.
+At that point, name and rollNo are not initialized yet.
+The assignments (this.name = name;) happen inside the body of the constructor, which runs after the object is created.
+Dart’s null-safety rules don’t allow an object to exist — even for a moment — with uninitialized non-nullable fields.
+That’s why you see an error.
+
+Student(this.name, this.rollNo) → initialization happens immediately, before object creation.
+this.name = name; inside the body → happens after object creation, which is too late for non-nullable fields.
+
+Named Constructor:
+a class can have multiple constructors.
+To differentiate them, you can give a constructor a name.
+This is called a named constructor.
+
+
+To create multiple ways of initializing an object.
+To give more readability (self-explanatory names).
+Useful when you want different setups for the same class.
+
+
+
+Hashcode:
+For variables of built-in value types (like int, double, String, bool):
+Their hashCode is based on the value itself, not on memory address.
+
+String a = "hello";
+String b = "hello";
+
+print(a == b);         // true
+print(a.hashCode);     // same
+print(b.hashCode);     // same
+
+
+Dart's core types override == and hashCode so that:
+Equal values are truly equal
+Same values give same hashCode
+
+
+For objects of custom classes:
+By default, == and hashCode use object identity, not contents.
+
+class Person {
+  String name;
+  Person(this.name);
+}
+
+void main() {
+  var p1 = Person("Alice");
+  var p2 = Person("Alice");
+
+  print(p1 == p2);         // false 
+  print(p1.hashCode);      // different 
+  print(p2.hashCode);      // different 
+}
+
+Unless you override == and hashCode, Dart doesn’t know how to compare the contents of your object.
+
+
