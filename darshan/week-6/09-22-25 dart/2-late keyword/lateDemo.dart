@@ -1,8 +1,7 @@
 class FDAccount {
   String accountHolder;
   double principleAmount;
-  late double
-  interest; //this variable can only be used once it is initialised.
+  late double interest; //this variable can only be used once it is initialised.
 
   FDAccount(this.accountHolder, this.principleAmount) {
     assignInterest(principleAmount);
